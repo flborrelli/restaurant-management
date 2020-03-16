@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './restaurants.css';
 import { Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function Restaurants() {
 
@@ -19,7 +20,9 @@ return (
     <ul>
     {restaurantList.map(restaurant => {
       return(
+        <Link to={`/api/restaurants/${restaurant._id}`}>
         <li>{restaurant.name}</li>
+        </Link>
       )
     })}
     </ul>

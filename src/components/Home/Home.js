@@ -19,7 +19,7 @@ function Home() {
     </Link>
     </div>
     <div class="col-sm-3 d-flex justify-content-center">
-    <Link to={'/api/restaurants'}>
+    <Link to={'/all-restaurants'}>
       <Button secondary>All Restaurants</Button>
     </Link>
     </div>

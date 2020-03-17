@@ -20,16 +20,26 @@ return (
     <ul>
     {restaurantList.map(restaurant => {
       return(
-        <Link to={`/api/restaurants/${restaurant._id}`}>
+        <Link to={`/restaurant/${restaurant._id}`}>
         <li>{restaurant.name}</li>
         </Link>
       )
     })}
     </ul>
   </div>
+  <>
+  <div>
+  <Link to={'/add-restaurant'}>
+      <Button color='green'>Add a Restaurant</Button>
+    </Link>
+  </div>
+
+  <div>
   <Link to={'/'}>
       <Button color='teal'>Return</Button>
     </Link>
+  </div>
+  </>
   </div>
 );
 }

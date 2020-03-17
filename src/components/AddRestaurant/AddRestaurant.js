@@ -12,46 +12,76 @@ import {
   TextArea,
 } from 'semantic-ui-react';
 
-const options = [
-  { key: 'm', text: 'Male', value: 'male' },
-  { key: 'f', text: 'Female', value: 'female' },
-  { key: 'o', text: 'Other', value: 'other' },
-]
 
 
 function AddRestaurant() {
 
-  const postRestaurant = async () => {
-    const response = await axios.post('http://localhost:5000/api/restaurants');
+  const [inputs, setInputs] = useState([{
+    name: '',
+    location: '',
+    chain: ''
+  }])
 
-  }
+  useEffect(() => {
+  }, [])
 
-  const handleSubmit = () => {
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // axios.post('http://localhost:5000/api/restaurants', inputs)
+    // .then(response => {
+    //   setInputs({
+    //   name: '',
+    //   location: '',
+    //   chain: ''
+    // })
+    // })
+    // .catch(error => {
+    //   console.log('Error while posting', error)
+    // })
 }
+
+const handleChange = (e) => {
+  e.preventDefault();
+  const { name, value } = e.target;
+  setInputs({
+    [name]: value
+  })
+}
+
+console.log(inputs)
 
   return (
     <div className="add-restaurant">
-  <Form>
+  <Form onSubmit={handleSubmit}>
         <Form.Group widths='equal'>
           <Form.Field
             control={Input}
             label='First name'
             placeholder='Name'
+            name='name'
+            value={inputs.name}
+            onChange={handleChange}
           />
           <Form.Field
             control={Input}
             label='Last name'
             placeholder='Location'
+            name='location'
+            value={inputs.location}
+            onChange={handleChange}
           />
           <Form.Field
             control={Select}
             label='Gender'
-            options={options}
+            // options={options}
             placeholder='Chain'
+            name='chain'
+            value={inputs.chain}
+            onChange={handleChange}
           />
         </Form.Group>
-        <Form.Field control={Button}>Submit</Form.Field>
+        <Form.Field control={Button} type='submit' value='Submit'>Submit</Form.Field>
       </Form>
     </div>
   );

@@ -8,6 +8,7 @@ import {
   Form,
   Input,
   Radio,
+  Dropdown,
   Select,
   TextArea,
 } from 'semantic-ui-react';
@@ -16,40 +17,46 @@ import {
 
 function AddRestaurant() {
 
-  const [inputs, setInputs] = useState([{
+  const [userInputs, setInputs] = useState({
     name: '',
     location: '',
     chain: ''
-  }])
+  });
 
-  useEffect(() => {
-  }, [])
+  const options = [
+              {text: '5e62b1a26ba9973846fe6c97', value: '5e62b1a26ba9973846fe6c97'},
+              {text: '5e62b1a26ba9973846fe6c97ddd', value: '5e62b1a26ba9973846fe6c97ddd'},
+              {text: '5e62b1a26ba9973846fe6c97aswdwd3', value: '5e62b1a26ba9973846fe6c97aswdwd3'}
+            ]
+
+  // useEffect(() => {
+  // }, [])
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // axios.post('http://localhost:5000/api/restaurants', inputs)
-    // .then(response => {
-    //   setInputs({
-    //   name: '',
-    //   location: '',
-    //   chain: ''
-    // })
-    // })
-    // .catch(error => {
-    //   console.log('Error while posting', error)
-    // })
+    console.log(userInputs)
+    axios.post('http://localhost:5000/api/restaurants', userInputs)
+    .then(response => {
+      console.log(response)
+      setInputs({
+      name: '',
+      location: '',
+      chain: ''
+    })
+    })
+    .catch(error => {
+      console.log('Error while posting', error)
+    })
 }
 
-const handleChange = (e) => {
+const handleChange = (e, result) => {
   e.preventDefault();
-  const { name, value } = e.target;
-  setInputs({
-    [name]: value
-  })
-}
+  const { name, value } = result || e.target;
+    setInputs({ ...userInputs, [name]: value });
+};
 
-console.log(inputs)
+console.log(userInputs);
 
   return (
     <div className="add-restaurant">
@@ -58,31 +65,34 @@ console.log(inputs)
           <Form.Field
             control={Input}
             label='First name'
-            placeholder='Name'
+            placeholder='Insert Restaurant Name'
             name='name'
-            value={inputs.name}
+            value={userInputs.name}
             onChange={handleChange}
           />
           <Form.Field
             control={Input}
-            label='Last name'
-            placeholder='Location'
+            label='Location'
+            placeholder='Add Restaurant Address'
             name='location'
-            value={inputs.location}
+            value={userInputs.location}
             onChange={handleChange}
           />
           <Form.Field
             control={Select}
-            label='Gender'
-            // options={options}
+            label='Chain'
+            options={options}
             placeholder='Chain'
             name='chain'
-            value={inputs.chain}
+            value={userInputs.chain}
             onChange={handleChange}
           />
         </Form.Group>
         <Form.Field control={Button} type='submit' value='Submit'>Submit</Form.Field>
       </Form>
+      <Link to={'/all-restaurants'}>
+      <Button color='teal'>Return</Button>
+    </Link>
     </div>
   );
 }

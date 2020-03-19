@@ -20,7 +20,7 @@ return (
     <ul>
     {restaurantList.map(restaurant => {
       return(
-        <Link to={`/restaurant/${restaurant._id}`}>
+        <Link to={`/restaurant/${restaurant._id}`} key={restaurant._id}>
         <li>{restaurant.name}</li>
         </Link>
       )

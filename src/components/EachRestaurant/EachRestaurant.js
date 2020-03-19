@@ -9,6 +9,10 @@ function EachRestaurant(props) {
   const [restaurantDetails, setRestaurantDetails] = useState({});
   const [chainName, setChainName] = useState({});
 
+  useEffect(() => {
+    getSpecificRestaurant()
+  }, [])
+
   const getSpecificRestaurant = async () => {
     try{
       const { params } = props.match;
@@ -30,11 +34,20 @@ function EachRestaurant(props) {
     }
   }
 
-  useEffect(() => {
-    getSpecificRestaurant()
-  }, [])
 
-  console.log('chain', chainName)
+  const deleteRestaurant = async (id) => {
+    try{
+      await axios.delete(`http://localhost:5000/api/restaurants/${id}`)
+      .then(() => {
+        props.history.push('/all-restaurants');
+      })
+      .catch(err => {
+        console.log('Error while redirecting', err)
+      }) 
+    }catch(err){
+      console.log('Error while deleting restaurant', err)
+    }
+  }
 
   return (
     <div className="home">
@@ -44,7 +57,12 @@ function EachRestaurant(props) {
     <h4>Chain: {chainName.name}</h4>
     </div>
     <div>
-  <Link to={'/api/restaurants'}>
+    <Link to={'/'}>
+          <Button onClick={() => deleteRestaurant(restaurantDetails._id)} color='red'>Delete</Button>
+        </Link>
+    </div>
+    <div>
+  <Link to={'/all-restaurants'}>
       <Button color='teal'>Return</Button>
     </Link>
   </div>

@@ -11,14 +11,14 @@ function Home() {
       <h1>WORC</h1>
       <h2>Restaurant Chain Management</h2>
     </div>
-      <div class="container">
-  <div class="row justify-content-center">
-    <div class="col-sm-3 d-flex justify-content-center">
-    <Link to={'/api/chains'}>
+      <div className="container">
+  <div className="row justify-content-center">
+    <div className="col-sm-3 d-flex justify-content-center">
+    <Link to={'/all-chains'}>
       <Button primary>Chains</Button>
     </Link>
     </div>
-    <div class="col-sm-3 d-flex justify-content-center">
+    <div className="col-sm-3 d-flex justify-content-center">
     <Link to={'/all-restaurants'}>
       <Button secondary>All Restaurants</Button>
     </Link>

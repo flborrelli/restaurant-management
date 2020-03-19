@@ -18,18 +18,26 @@ function EachChain(props) {
       const { params } = props.match;
       let response = await axios.get(`http://localhost:5000/api/chains/${params.chainId}`);
       setChainDetails(response.data.chain);
-      getRestaurants(response.data.chain._id)
-      console.log(response.data)
+      getRestaurants(response.data.chain.restaurants)
     }catch(err){
       console.log('Error while accessing a specific chain:', err)
     }
 
   }
 
-  const getRestaurants = async (id) => {
+  const getRestaurants = async (restaurantsArr) => {
     try{
-      let response = await axios.get(`http://localhost:5000/api/chains/${id}`)
-      console.log('response', response.data)
+        const newArr = [];
+        await restaurantsArr.map(async restaurantId => {
+        const restaurants = await axios.get(`http://localhost:5000/api/restaurants/${restaurantId}`)
+        // return newArr.push(restaurants.data.restaurant)
+        return setRestaurantsArray(restaurantsArray => [...restaurantsArray, restaurants.data.restaurant])
+        // .then(response => {
+        //   console.log(response.data)
+        // })
+        // .catch(err => console.log('error while adding to array', err))
+      })
+      // setRestaurantsArray(newArr)
     } catch(err){
       console.log('Error while getting restaurants array', err)
     }
@@ -52,6 +60,8 @@ function EachChain(props) {
   // }
   // onClick={() => deleteRestaurant(restaurantDetails._id)}
 
+  console.log('rest array', restaurantsArray)
+
   return (
     <div className="home">
     <div>
@@ -72,7 +82,7 @@ function EachChain(props) {
         </Link>
     </div>
     <div>
-  <Link to={'/all-restaurants'}>
+  <Link to={'/all-chains'}>
       <Button color='teal'>Return</Button>
     </Link>
   </div>

@@ -23,14 +23,23 @@ function AddRestaurant() {
     chain: ''
   });
 
-  const options = [
-              {text: '5e62b1a26ba9973846fe6c97', value: '5e62b1a26ba9973846fe6c97'},
-              {text: '5e62b1a26ba9973846fe6c97ddd', value: '5e62b1a26ba9973846fe6c97ddd'},
-              {text: '5e62b1a26ba9973846fe6c97aswdwd3', value: '5e62b1a26ba9973846fe6c97aswdwd3'}
-            ]
+  const [chainInfos, setChainInfos] = useState([{}]);
 
-  // useEffect(() => {
-  // }, [])
+  useEffect(() => {
+    chainData()
+  }, [])
+
+  const chainData = async () => {
+    try{
+      const response = await axios.get('http://localhost:5000/api/chains');
+      setChainInfos(response.data)
+    } catch(err){
+      console.log('Error while getting Chain Infos:', err)
+    }
+    
+  }
+
+  const options = [];
 
 
   const handleSubmit = (e) => {
@@ -56,7 +65,7 @@ const handleChange = (e, result) => {
     setInputs({ ...userInputs, [name]: value });
 };
 
-console.log(userInputs);
+console.log(chainInfos);
 
   return (
     <div className="add-restaurant">

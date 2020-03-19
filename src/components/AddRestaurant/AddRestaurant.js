@@ -39,9 +39,6 @@ function AddRestaurant() {
     
   }
 
-  const options = [];
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(userInputs)
@@ -90,7 +87,7 @@ console.log(chainInfos);
           <Form.Field
             control={Select}
             label='Chain'
-            options={options}
+            options={chainInfos.map(chain => ({text: chain.name, value: chain._id}))}
             placeholder='Chain'
             name='chain'
             value={userInputs.chain}
